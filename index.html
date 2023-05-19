@@ -5,32 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <div class="calculator">
-        <div class="screen-container">
-          <div class="screen">value</div>
+    <div class="container glass-container">
+      <div class="calculator corners">
+        <div class="screen-container corners">
+          <input type="text" placeholder="0" class="screen" />
         </div>
 
         <div class="numbers">
-          <div class="number">1</div>
-          <div class="number">2</div>
-          <div class="number">3</div>
-          <div class="number">4</div>
-          <div class="number">5</div>
-          <div class="number">6</div>
-          <div class="number">7</div>
-          <div class="number">8</div>
-          <div class="number">9</div>
-          <div class="number">10</div>
-          <div class="number">11</div>
-          <div class="number">12</div>
-          <div class="number">13</div>
-          <div class="number">14</div>
-          <div class="number">15</div>
+          <div class="first line">
+            <button class="number" value="C">C</button>
+            <button class="number backSpace" value="X">X</button>
+            <button class="number remainder" value="%">%</button>
+            <button class="number divide" value="/">/</button>
+          </div>
+          <div class="second line">
+            <button class="number seven" value="7">7</button>
+            <button class="number eight" value="8">8</button>
+            <button class="number nine" value="9">9</button>
+            <button class="number mulitply" value="x">x</button>
+          </div>
+          <div class="third line">
+            <button class="number four" value="4">4</button>
+            <button class="number five" value="5">5</button>
+            <button class="number six" value="6">6</button>
+            <button class="number subtract" value="-">-</button>
+          </div>
+          <div class="fourth line">
+            <button class="number one" value="1">1</button>
+            <button class="number two" value="2">2</button>
+            <button class="number three" value="3">3</button>
+            <button class="number add" value="+">+</button>
+          </div>
+          <div class="fifth line">
+            <button class="number zero" value="0">0</button>
+            <button class="number decimal" value=".">.</button>
+            <button class="number calculate" value="=">=</button>
+          </div>
         </div>
       </div>
     </div>

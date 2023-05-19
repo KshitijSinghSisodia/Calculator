@@ -1,3 +1,5 @@
+const placeholderText = "0";
+const allowedValues = /^[0-9+\-*/^().]+$/;
 function add(...args) {
   return args.reduce((a, b) => {
     return a + b;
@@ -46,3 +48,33 @@ function operate(left, operator, right) {
       return;
   }
 }
+
+const value = document.querySelectorAll(".number");
+value.forEach((num) => {
+  num.addEventListener("click", (e) => {
+    console.log(e.target.value);
+  });
+});
+
+const screen = document.querySelector(".screen");
+screen.addEventListener("input", validateInput);
+screen.focus();
+
+function validateInput(e) {
+  const input = e.target.value;
+  if (!allowedValues.test(input)) {
+    e.target.value = input.replace(/[^0-9+\-*/^().]/g, "");
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  let name = e.key;
+  let code = e.code;
+  console.log(`pressed ${name} code: ${code}`);
+});
+
+// screen is always in focus
+document.addEventListener("click", () => {
+  screen.focus();
+});
+screen.focus();

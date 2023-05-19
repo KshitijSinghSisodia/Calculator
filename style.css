@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -9,17 +12,28 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: #151617;
 }
+
 .container {
   min-width: 1200px;
-  min-height: 100vh;
-  border: 2px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.glass-container {
+  background-color: rgba(255, 255, 255, 0.023);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .calculator {
-  border: 2px solid red;
+  border: 2px solid #ffffff;
   display: flex;
   flex-direction: column;
   flex-basis: 40%;
@@ -29,25 +43,97 @@ body {
 }
 
 .screen-container {
-  border: 2px solid purple;
   width: 100%;
-  min-height: 150px;
+  max-height: 150px;
   padding: 16px;
-}
-.screen {
   display: flex;
-  border: 2px solid orange;
-  flex: 1;
-  min-height: 120px;
-  justify-content: end;
   align-items: flex-end;
 }
+
+.screen {
+  flex: none;
+  flex-grow: 0;
+  display: flex;
+  text-overflow: clip;
+  resize: none;
+  height: 120px;
+  text-align: right;
+  padding: 8px;
+  color: #ffffff;
+  box-shadow: 0px 4px 8px #151617;
+  border: none;
+  outline: none;
+  font-size: 32px;
+  overflow: auto;
+  background-color: #000000;
+  border-radius: 5px;
+  caret-color: transparent;
+}
+
 .numbers {
   flex: 1;
   min-height: auto;
   min-width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
+}
+
+.line {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.corners {
+  border-radius: 10px;
+}
+
+.number {
+  flex: 1;
+  min-height: 50px;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  font-size: larger;
+  color: #ffffff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.number:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #eeeeee;
+}
+
+.first > .number {
+  color: rgb(255, 149, 57);
+  border: 2px solid rgb(255, 149, 57);
+  background-color: #151617;
+}
+
+.first > .number:hover {
+  background-color: #00000096;
+}
+
+div.second button:last-child,
+div.third button:last-child,
+div.fourth button:last-child,
+div.fifth button:last-child {
+  color: rgb(255, 149, 57);
+  border: 2px solid rgb(255, 149, 57);
+  background-color: #151617;
+}
+
+div.second button:last-child:hover,
+div.third button:last-child:hover,
+div.fourth button:last-child:hover,
+div.fifth button:last-child:hover {
+  background-color: #00000096;
 }
