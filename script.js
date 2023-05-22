@@ -77,6 +77,15 @@ function divide(...args) {
   });
 }
 
+function modulo(...args) {
+  return args.reduce((a, b) => {
+    if (b === 0) {
+      return "Are You Serious!!??";
+    }
+    return a % b;
+  });
+}
+
 // for calculation
 function operate(left, op, right) {
   left = +left;
@@ -90,6 +99,8 @@ function operate(left, op, right) {
       return multiply(left, right);
     case "/":
       return divide(left, right);
+    case "%":
+      return modulo(left, right);
     default:
       return;
   }
