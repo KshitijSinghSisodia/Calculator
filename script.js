@@ -1,4 +1,3 @@
-//  rewriting js
 "use strict";
 const allowedValues = /^[0-9+\-*/^().%]+$/;
 const onlyNumbers = /^[0-9]+$/;
@@ -6,6 +5,7 @@ const screen = document.querySelector(".screen");
 const numberBtn = document.querySelectorAll(".number");
 screen.value = "";
 let currentOperator = null;
+let decimalEntered = false;
 const classToFunction = {
   clear: clear,
   backSpace: removeLast,
@@ -43,6 +43,7 @@ function removeLast(string) {
     screen.value = currentText.slice(0, -1);
   }
 }
+
 // for screen input by keyboard
 screen.addEventListener("input", validateInput);
 
@@ -108,11 +109,19 @@ function operate(left, op, right) {
 
 numberBtn.forEach((num) => {
   num.addEventListener("click", (e) => {
+    const inputValue = e.target.value;
+    if (inputValue === "." && decimalEntered) {
+      return;
+    }
     if (
       !num.classList.contains("function") &&
       !num.classList.contains("operator")
     ) {
       let input = e.target.value;
+      if (input === ".") {
+        decimalEntered = true;
+      }
+
       screen.value += checkExpression(input);
     } else if (num.classList.contains("operator")) {
       const newOperator = e.target.value;
@@ -125,6 +134,7 @@ numberBtn.forEach((num) => {
       }
       currentOperator = newOperator;
       screen.value += currentOperator;
+      decimalEntered = false;
     } else if (num.classList.contains("calculate")) {
       const expression = screen.value.split(currentOperator);
       if (expression.length === 2) {
@@ -134,6 +144,7 @@ numberBtn.forEach((num) => {
         screen.value = result;
       }
       currentOperator = null;
+      decimalEntered = false;
     } else {
       const className = num.classList[1];
       if (className in classToFunction) {
@@ -147,6 +158,7 @@ numberBtn.forEach((num) => {
 function clear() {
   screen.value = "";
   currentOperator = null;
+  decimalEntered = false;
 }
 
 //keep the screen in focus
