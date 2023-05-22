@@ -1,6 +1,7 @@
 //  rewriting js
 "use strict";
 const allowedValues = /^[0-9+\-*/^().%]+$/;
+const onlyNumbers = /^[0-9]+$/;
 const screen = document.querySelector(".screen");
 const numberBtn = document.querySelectorAll(".number");
 screen.value = "";
@@ -15,6 +16,11 @@ function checkExpression(input) {
   return input.replace(/[^0-9+\-*/^().%]/g, "");
 }
 
+//for numbers by keyboard
+function checkForNumbers(input) {
+  return input.replace(/[^0-9]/g, "");
+}
+
 // operator handling
 function handleOperator(e) {
   currentOperator = e.target.value;
@@ -25,8 +31,8 @@ function handleOperator(e) {
 // inputHandler
 function validateInput(e) {
   const input = e.target.value;
-  if (!allowedValues.test(input)) {
-    e.target.value = checkExpression(input);
+  if (!onlyNumbers.test(input)) {
+    e.target.value = checkForNumbers(input);
   }
 }
 
