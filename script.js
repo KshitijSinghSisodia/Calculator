@@ -1,19 +1,46 @@
-const placeholderText = "0";
-const allowedValues = /^[0-9+\-*/^().]+$/;
+//  rewriting js
+"use strict";
+const allowedValues = /^[0-9+\-*/^().%]+$/;
 const screen = document.querySelector(".screen");
+const numberBtn = document.querySelectorAll(".number");
 screen.value = "";
-
+let currentOperator = null;
 const classToFunction = {
   clear: clear,
   backSpace: removeLast,
-  // remainder: modulo,
-  // divide: division,
-  // multiply: multiplication,
-  // subtract: subtraction,
-  // add: addition,
   calculate: operate,
 };
 
+function checkExpression(input) {
+  return input.replace(/[^0-9+\-*/^().%]/g, "");
+}
+
+// operator handling
+function handleOperator(e) {
+  currentOperator = e.target.value;
+  screen.value += currentOperator;
+  console.log(currentOperator);
+}
+
+// inputHandler
+function validateInput(e) {
+  const input = e.target.value;
+  if (!allowedValues.test(input)) {
+    e.target.value = checkExpression(input);
+  }
+}
+
+//backSpace handler
+function removeLast(string) {
+  let currentText = screen.value;
+  if (currentText !== "") {
+    screen.value = currentText.slice(0, -1);
+  }
+}
+// for screen input by keyboard
+screen.addEventListener("input", validateInput);
+
+//basic math functions
 function add(...args) {
   return args.reduce((a, b) => {
     return a + b;
@@ -35,17 +62,18 @@ function multiply(...args) {
 function divide(...args) {
   return args.reduce((a, b) => {
     if (b == 0) {
-      console.log("Kono Baka!!!");
-      return;
+      // console.log("Kono Baka!!!");
+      return "Kono Baka!!!";
     }
     return a / b;
   });
 }
 
-function operate(left, operator, right) {
+// for calculation
+function operate(left, op, right) {
   left = +left;
   right = +right;
-  switch (operator) {
+  switch (op) {
     case "+":
       return add(left, right);
     case "-":
@@ -59,63 +87,51 @@ function operate(left, operator, right) {
   }
 }
 
-const value = document.querySelectorAll(".number");
-value.forEach((num) => {
+numberBtn.forEach((num) => {
   num.addEventListener("click", (e) => {
-    const className = num.classList[1];
-    if (className in classToFunction) {
-      classToFunction[className]();
+    if (
+      !num.classList.contains("function") &&
+      !num.classList.contains("operator")
+    ) {
+      let input = e.target.value;
+      screen.value += checkExpression(input);
+    } else if (num.classList.contains("operator")) {
+      const newOperator = e.target.value;
+      if (currentOperator !== null) {
+        const expression = screen.value.split(currentOperator);
+        const left = expression[0].trim();
+        const right = expression[1].trim() || expression[0].trim();
+        const result = operate(left, currentOperator, right);
+        screen.value = result;
+      }
+      currentOperator = newOperator;
+      screen.value += currentOperator;
+    } else if (num.classList.contains("calculate")) {
+      const expression = screen.value.split(currentOperator);
+      if (expression.length === 2) {
+        const left = expression[0].trim();
+        const right = expression[1].trim();
+        const result = operate(left, currentOperator, right);
+        screen.value = result;
+      }
+      currentOperator = null;
     } else {
-      screen.value += num.value;
+      const className = num.classList[1];
+      if (className in classToFunction) {
+        classToFunction[className]();
+      }
     }
   });
 });
 
-screen.addEventListener("input", validateInput);
-screen.focus();
-
-function validateInput(e) {
-  const input = e.target.value;
-  if (!allowedValues.test(input)) {
-    e.target.value = input.replace(/[^0-9+\-*/^().%]/g, "");
-  }
-}
-
+// clear function
 function clear() {
   screen.value = "";
+  currentOperator = null;
 }
 
-function removeLast() {
-  let currentText = screen.value;
-  if (currentText !== "") {
-    screen.value = currentText.slice(0, -1);
-  }
-}
-
-document.addEventListener("keydown", (e) => {
-  const key = e.key;
-  const code = e.code;
-  const button = document.querySelector(
-    `button[data-key="${key}"][data-code="${code}"]`
-  );
-  if (button) {
-    button.classList.add("highlight");
-  }
-});
-
-document.addEventListener("keyup", (e) => {
-  const key = e.key;
-  const code = e.code;
-  const button = document.querySelector(
-    `button[data-key="${key}"][data-code="${code}"]`
-  );
-  if (button) {
-    button.classList.remove("highlight");
-  }
-});
-
+//keep the screen in focus
 document.addEventListener("click", () => {
   screen.focus();
 });
-
 screen.focus();
