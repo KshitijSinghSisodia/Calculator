@@ -60,9 +60,11 @@ function multiply(...args) {
 }
 
 function divide(...args) {
+  if (args[0] === 0) {
+    return 0;
+  }
   return args.reduce((a, b) => {
-    if (b == 0) {
-      // console.log("Kono Baka!!!");
+    if (b === 0) {
       return "Kono Baka!!!";
     }
     return a / b;
