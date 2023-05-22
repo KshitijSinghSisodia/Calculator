@@ -12,6 +12,12 @@ const classToFunction = {
   calculate: operate,
 };
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/") {
+    e.preventDefault();
+  }
+});
+
 function checkExpression(input) {
   return input.replace(/[^0-9+\-*/^().%]/g, "");
 }
@@ -109,6 +115,7 @@ function operate(left, op, right) {
 
 numberBtn.forEach((num) => {
   num.addEventListener("click", (e) => {
+    e.preventDefault();
     const inputValue = e.target.value;
     if (inputValue === "." && decimalEntered) {
       return;
